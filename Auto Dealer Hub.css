@@ -1,0 +1,1531 @@
+/* ==========================================================================
+   GLOBAL CONFIGURATION & RESET CORE SYSTEM
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+ .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .vehicle-detail-modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-close-btn:hover {
+            background: #f0f0f0;
+            transform: scale(1.1);
+        }
+
+        .modal-header {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-vehicle-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-vehicle-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-vehicle-info h2 {
+            font-size: 28px;
+            margin: 0;
+            color: #111;
+        }
+
+        .modal-vehicle-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-tag {
+            background-color: #f0f0f0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .meta-tag.rating {
+            background-color: #fff3cd;
+            color: #b8860b;
+        }
+
+        .vehicle-specs {
+            font-size: 16px;
+            color: #666;
+            margin: 0;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 10px 0;
+        }
+
+        .modal-price-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 15px 0;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 5px 0;
+        }
+
+        .price-large {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111;
+            margin: 0;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0052a3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background-color: #efefef;
+        }
+
+        .btn-secondary.active {
+            background-color: #ffebee;
+            color: #c41c3b;
+            border-color: #c41c3b;
+        }
+
+        .btn-secondary.active i {
+            color: #c41c3b;
+        }
+
+        .car-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .accordion-list-stack {
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            overflow: visible;
+            margin-top: 24px;
+        }
+
+        .accordion-node {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+            margin-bottom: 12px;
+        }
+
+        .accordion-node:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .accordion-node:last-child {
+            margin-bottom: 0;
+        }
+
+        .accordion-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            background-color: transparent;
+        }
+
+        .accordion-trigger:hover {
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .accordion-panel-content {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 22px;
+            transition: max-height 0.32s ease, padding 0.32s ease;
+        }
+
+        .accordion-node.open .accordion-trigger {
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .accordion-node.open .accordion-panel-content {
+            max-height: 420px;
+            padding: 18px 22px 20px;
+        }
+
+        .accordion-node.open {
+            border-color: var(--accent-orange);
+            background-color: rgba(255, 153, 0, 0.06);
+        }
+
+        .accordion-panel-content p {
+            margin: 0;
+            color: #525252;
+            line-height: 1.75;
+        }
+
+        @media (max-width: 600px) {
+            .vehicle-detail-modal {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-vehicle-info h2 {
+                font-size: 22px;
+            }
+
+            .price-large {
+                font-size: 20px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+:root {
+    --bg-deep-space: #070b12;
+    --bg-card-panel: #0f1420;
+    --bg-input-field: #131a2a;
+    --accent-orange: #ff9900;
+    --accent-orange-hover: #e08800;
+    --text-primary: #ffffff;
+    --text-secondary: #8792a5;
+    --border-subtle: #1f2a42;
+    --border-focus: #3b4f77;
+    
+    /* System Badge Matrix Colors */
+    --clr-yellow: #ffb703;
+    --clr-red: #ef233c;
+    --clr-purple: #8338ec;
+    --clr-blue: #00b4d8;
+    --clr-teal: #06d6a0;
+}
+
+body {
+    background-color: var(--bg-deep-space);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   REUSABLE RECONSTRUCTIVE UI COMPONENTS
+   ========================================================================== */
+.btn-primary {
+    background-color: var(--accent-orange);
+    color: #000000;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-orange-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    font-weight: 600;
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 14px 28px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    border-color: var(--text-secondary);
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Base Form Input Fields Infrastructure Blueprint */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    width: 100%;
+    background-color: var(--bg-input-field);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--border-focus);
+}
+
+/* Global Navigation Top Header Blueprint Styling */
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    background-color: var(--accent-orange);
+    color: #000000;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.brand-name {
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.brand-header.mini .brand-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.brand-header.mini .brand-name {
+    font-size: 1rem;
+}
+
+/* System Matrix Color Badges layout */
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.badge-yellow { background: rgba(255, 183, 3, 0.15); color: var(--clr-yellow); }
+.badge-red { background: rgba(239, 35, 60, 0.15); color: var(--clr-red); }
+.badge-purple { background: rgba(131, 56, 236, 0.15); color: var(--clr-purple); }
+.badge-blue { background: rgba(0, 180, 216, 0.15); color: var(--clr-blue); }
+.badge-teal { background: rgba(6, 214, 160, 0.15); color: var(--clr-teal); }
+.badge-orange { background: rgba(255, 153, 0, 0.15); color: var(--accent-orange); }
+.badge-cyan { background: rgba(0, 180, 216, 0.15); color: #00b4d8; }
+.badge-green { background: rgba(6, 214, 160, 0.15); color: var(--clr-teal); }
+
+/* ==========================================================================
+   AUTHENTICATION ENGINE GRAPHICAL WRAPPER STYLE SHEET
+   ========================================================================== */
+.auth-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+}
+
+/* Left Half Split Hero Display Panel */
+.auth-banner {
+    flex: 1;
+    background: linear-gradient(rgba(7, 11, 18, 0.65), rgba(7, 11, 18, 0.9)), 
+                url('https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=1200') no-repeat center center;
+    background-size: cover;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1.5px solid var(--border-subtle);
+}
+
+.banner-content {
+    max-width: 480px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.sub-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 16px;
+    position: relative;
+    padding-left: 24px;
+}
+
+.sub-tag::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 2px;
+    background-color: var(--text-secondary);
+}
+
+.yellow-text::before { background-color: var(--accent-orange); }
+.yellow-text { color: var(--accent-orange); }
+
+.auth-banner h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: var(--accent-orange);
+}
+
+.auth-banner p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
+
+.banner-stats {
+    display: flex;
+    gap: 40px;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.05);
+    padding-top: 32px;
+}
+
+.stat-item h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-orange);
+    margin-bottom: 4px;
+}
+
+.stat-item p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Right Half Screen - Input Form Handling Matrix Panel */
+.auth-form-side {
+    width: 500px;
+    background-color: var(--bg-deep-space);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.auth-form-side.active-view {
+    display: flex;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+}
+
+.auth-toggle-header {
+    background-color: var(--bg-card-panel);
+    border: 1px solid var(--border-subtle);
+    padding: 6px;
+    border-radius: 12px;
+    display: inline-flex;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.toggle-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+    background-color: var(--accent-orange);
+    color: #000000;
+}
+
+.form-container h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.form-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: left;
+    margin-bottom: 32px;
+}
+
+.main-submit {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.demo-notice {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.2);
+    margin-top: 24px;
+}
+
+
+/* ==========================================================================
+   APPLICATION MASTER SHELL CORE STYLING LAYOUT
+   ========================================================================== */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Global Application Level Fixed Navbar Block Header styling row */
+.navbar {
+    background-color: rgba(7, 11, 18, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1.5px solid var(--border-subtle);
+    padding: 0 40px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+    height: 100%;
+    align-items: center;
+}
+
+.nav-item {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nav-item.active {
+    background-color: rgba(255, 153, 0, 0.1);
+    color: var(--accent-orange);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-color: var(--bg-card-panel);
+    border: 1px solid var(--border-subtle);
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.user-profile:hover {
+    border-color: var(--border-focus);
+}
+
+.user-profile .avatar {
+    width: 24px;
+    height: 24px;
+    background-color: var(--accent-orange);
+    color: #000000;
+    font-weight: 700;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-profile span {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.user-profile i {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+/* Base structural workspace containers layouts setup */
+.content-body {
+    flex: 1;
+    padding-bottom: 80px;
+}
+
+.tab-view {
+    display: none;
+}
+
+.tab-view.active-tab {
+    display: block;
+}
+
+.section-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 48px 40px 0 40px;
+}
+
+.narrow-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 40px 0 40px;
+}
+
+.narrow-container h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.text-center { text-align: center; }
+
+
+/* ==========================================================================
+   TAB SPECIFIC VIEW SCHEMATICS 
+   ========================================================================== */
+
+/* 1. HOME TAB MAIN CALLOUT VIEWS */
+.hero-section {
+    background: linear-gradient(rgba(7, 11, 18, 0.4), rgba(7, 11, 18, 0.95)), 
+                url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=1600') no-repeat center 35%;
+    background-size: cover;
+    height: 520px;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+}
+
+.hero-overlay-content {
+    max-width: 580px;
+}
+
+.hero-overlay-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.hero-overlay-content p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+}
+
+/* Horizontal Metrics Stats Dashboard segment strip row */
+.horizontal-stats {
+    background-color: var(--bg-card-panel);
+    border-top: 1.5px solid var(--border-subtle);
+    border-bottom: 1.5px solid var(--border-subtle);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1000px;
+    margin: -40px auto 0 auto;
+    position: relative;
+    z-index: 10;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.h-stat-card {
+    text-align: center;
+    padding: 24px 16px;
+    border-right: 1.5px solid var(--border-subtle);
+}
+
+.h-stat-card:last-child {
+    border-right: none;
+}
+
+.h-stat-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent-orange);
+    margin-bottom: 4px;
+}
+
+.h-stat-card p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    margin-bottom: 28px;
+}
+
+.view-all-link {
+    background: transparent;
+    border: none;
+    color: var(--accent-orange);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+/* Premium Automotive Inventory Product Cards grid systems infrastructure */
+.car-grid {
+    display: grid;
+    gap: 24px;
+}
+
+.car-grid.columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.car-card {
+    background-color: var(--bg-card-panel);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.car-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-focus);
+}
+
+.card-image-wrapper {
+    position: relative;
+    height: 160px;
+    background-color: #000;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+}
+
+.card-image-wrapper .badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+}
+
+.rating-tag {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    background-color: rgba(7, 11, 18, 0.75);
+    backdrop-filter: blur(4px);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--clr-yellow);
+}
+
+.card-details {
+    padding: 20px;
+}
+
+.card-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.card-title-row h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.car-year {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.2);
+}
+
+.car-specs {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.card-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 16px 0;
+}
+
+.card-divider.light {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-main {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent-orange);
+}
+
+.price-sub {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.action-circle-btn {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    color: var(--accent-orange);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.car-card:hover .action-circle-btn {
+    background-color: var(--accent-orange);
+    color: #000000;
+    border-color: var(--accent-orange);
+}
+
+/* Dynamic promotional banner display footer card structure layout blueprint block */
+.promo-callout-box {
+    background: linear-gradient(rgba(15, 20, 32, 0.9), rgba(15, 20, 32, 0.9)),
+                url('https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=1000') no-repeat center center;
+    background-size: cover;
+    border: 1.5px solid rgba(255, 153, 0, 0.2);
+    border-radius: 14px;
+    padding: 32px 40px;
+    margin-top: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.callout-text-side h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.callout-text-side p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+
+/* 2. INVENTORY FILTER MECHANICS OVERRIDES */
+.inventory-top-bar {
+    margin-bottom: 32px;
+}
+
+.inventory-top-bar .section-subtitle {
+    margin-bottom: 0;
+}
+
+.filter-controls-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.search-input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    background-color: var(--bg-card-panel);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 14px 16px 14px 44px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.custom-dropdown-select {
+    background-color: var(--bg-card-panel);
+    border: 1.5px solid var(--border-subtle);
+    color: var(--text-primary);
+    border-radius: 10px;
+    padding: 0 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    min-width: 160px;
+}
+
+.pill-filters-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 32px;
+}
+
+.pill {
+    background-color: var(--bg-card-panel);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pill:hover {
+    color: var(--text-primary);
+    border-color: var(--border-focus);
+}
+
+.pill.active {
+    background-color: var(--accent-orange);
+    color: #000000;
+    border-color: var(--accent-orange);
+}
+
+
+/* 3. FINANCE CALCULATOR SCHEMATICS LAYOUT BLOCKS */
+.calculator-layout-split {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 32px;
+    margin-top: 40px;
+    align-items: start;
+}
+
+.calc-controls-card {
+    background-color: var(--bg-card-panel);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 32px;
+}
+
+.slider-control-group {
+    margin-bottom: 32px;
+}
+
+.slider-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+
+.slider-output-val {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.custom-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border-subtle);
+    outline: none;
+}
+
+/* Range Slider thumb styling configurations handles */
+.custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-orange);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+.custom-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+.slider-bounds {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.15);
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+.term-selector-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.term-buttons-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.term-btn {
+    background-color: var(--bg-input-field);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 12px 0;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.term-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-focus);
+}
+
+.term-btn.active {
+    background-color: var(--accent-orange);
+    color: #000000;
+    border-color: var(--accent-orange);
+}
+
+/* Right side Output configuration metrics report statement card box panel styling */
+.calc-summary-card {
+    background-color: var(--bg-card-panel);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 32px;
+}
+
+.summary-card-header {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+.monthly-payment-display {
+    margin: 24px 0 32px 0;
+}
+
+.monthly-payment-display .primary-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent-orange);
+    line-height: 1;
+}
+
+.monthly-payment-display .sub-lbl {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.summary-line-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    color: var(--text-secondary);
+}
+
+.summary-line-item span:last-child {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.green-text { color: var(--clr-teal) !important; }
+.orange-text { color: var(--accent-orange) !important; }
+
+.summary-line-item.final-total {
+    margin-top: 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.summary-line-item.final-total span:first-child {
+    color: var(--text-primary);
+}
+
+.calc-legal-disclaimer {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.15);
+    line-height: 1.4;
+    margin-top: 24px;
+}
+
+
+/* 4. DISCOUNTS & AVAILABLE OFFERS DISPLAY GRID PANELS SCENARIO */
+.offers-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.offer-card-item {
+    background-color: var(--bg-card-panel);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+}
+
+.offer-card-body {
+    position: relative;
+    z-index: 5;
+}
+
+.offer-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.offer-card-body h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.offer-card-body p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    max-width: 85%;
+}
+
+.coupon-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.coupon-code-container {
+    background-color: var(--bg-input-field);
+    border: 1px dashed var(--border-focus);
+    border-radius: 8px;
+    padding: 8px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.coupon-code-container span {
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.copy-embed-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.copy-embed-btn:hover { color: var(--text-primary); }
+
+.expiry-stamp {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Background watermark typography decorations element layout overlay */
+.watermark-percentage {
+    position: absolute;
+    right: -10px;
+    top: 0px;
+    font-size: 7.5rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.02);
+    user-select: none;
+    line-height: 1;
+    z-index: 1;
+}
+
+.info-guide-card {
+    background-color: rgba(0, 180, 216, 0.03);
+    border: 1.5px solid rgba(0, 180, 216, 0.15);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 32px;
+}
+
+.guide-header-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.icon-blue { color: var(--clr-blue); font-size: 1rem; }
+
+.info-guide-card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.info-guide-card p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+
+/* 5. LEGAL TERMS ACCORDION LIST VIEWS */
+.accordion-list-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 40px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.accordion-node {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.accordion-node:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.accordion-trigger {
+    padding: 20px 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.25s ease;
+    background-color: transparent;
+}
+
+.accordion-node.open .accordion-trigger {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.accordion-trigger:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.accordion-trigger span {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.accordion-trigger i {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: transform 0.25s ease;
+}
+
+.accordion-node.open .accordion-trigger i {
+    transform: rotate(180deg);
+    color: var(--accent-orange);
+}
+
+.accordion-panel-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+}
+
+.accordion-panel-content p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin: 0;
+    padding-top: 18px;
+}
+
+.accordion-node.open .accordion-panel-content {
+    max-height: 380px;
+    padding: 18px 24px 24px 24px;
+}
+
+.accordion-node.open {
+    border-color: var(--accent-orange);
+    background-color: rgba(255, 153, 0, 0.06);
+}
+
+
+/* ==========================================================================
+   GLOBAL APP LEVEL WIDGET FLOATING COMPONENTS
+   ========================================================================== */
+.floating-help-trigger-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 2000;
+    transition: all 0.2s ease;
+}
+
+.floating-help-trigger-widget:hover {
+    color: var(--text-primary);
+    border-color: var(--border-focus);
+    background-color: var(--bg-card-panel);
+}

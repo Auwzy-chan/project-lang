@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Hub - Premium Automotive Dealership</title>
+    <link rel="stylesheet" href="Auto Dealer Hub.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stats Grid Styling from Auto Dealer Hub.json */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            border-top: 1px solid rgba(31, 41, 55, 0.6);
+            padding-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="auth-container" class="auth-wrapper">
+        <div class="auth-banner">
+            <div class="brand-header">
+                <div class="brand-icon"><i class="fa-solid fa-car-side"></i></div>
+                <span class="brand-name">AUTO HUB</span>
+            </div>
+            <div class="banner-content">
+                <span class="sub-tag">PREMIER DEALERSHIP</span>
+                <h1>YOUR NEXT<br><span class="highlight">DREAM CAR</span><br>AWAITS.</h1>
+                <p>Browse, finance, and book your next premium vehicle — all in one place.</p>
+                
+                <div class="banner-stats">
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Vehicles</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>4.9★</h3>
+                        <p>Rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15yr</h3>
+                        <p>Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-signin" class="auth-form-side active-view">
+            <div class="form-container">
+                <div class="auth-toggle-header">
+                    <button class="toggle-btn active">Sign In</button>
+                    <button class="toggle-btn" onclick="switchView('view-signup')">Create Account</button>
+                </div>
+                
+                <h2>WELCOME BACK</h2>
+                <p class="form-subtitle">Sign in to your account to continue</p>
+
+                <form action="Auto Dealer Hub.php" method="POST" onsubmit="handleSigninSubmit(event);">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary main-submit">Sign In</button>
+                </form>
+                <p class="demo-notice">Demo: any email + 6+ character password</p>
+            </div>
+        </div>
+
+        <div id="view-signup" class="auth-form-side">
+            <div class="form-container">
+                <div class="auth-toggle-header">
+                    <button class="toggle-btn" onclick="switchView('view-signin')">Sign In</button>
+                    <button class="toggle-btn active">Create Account</button>
+                </div>
+                
+                <h2>JOIN AUTO HUB</h2>
+                <p class="form-subtitle">Create your account to get started</p>
+
+                <form id="signupForm" action="Auto Dealer Hub.php" method="POST" onsubmit="handleSignupSubmit(event);">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" name="Full_Name" placeholder="Alex Rivera" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="Email_Address" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="Phone_Number" placeholder="+63 9XX XXX XXXX" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" name="Password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary main-submit">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="app-container" class="app-layout" style="display: none;">
+        <header class="navbar">
+            <div class="brand-header mini">
+                <div class="brand-icon"><i class="fa-solid fa-car-side"></i></div>
+                <span class="brand-name">AUTO HUB</span>
+            </div>
+            <nav class="nav-links">
+                <button id="nav-home" class="nav-item active" onclick="switchTab('home')">Home</button>
+                <button id="nav-inventory" class="nav-item" onclick="switchTab('inventory')">Inventory</button>
+                <button id="nav-finance" class="nav-item" onclick="switchTab('finance')">Finance</button>
+                <button id="nav-offers" class="nav-item" onclick="switchTab('offers')">Offers</button>
+                <button id="nav-terms" class="nav-item" onclick="switchTab('terms')">Terms</button>
+            </nav>
+            <div class="user-profile" onclick="logoutDemo()">
+                <div class="avatar">A</div>
+                <span>Alex</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </header>
+
+        <main class="content-body">
+            
+            <section id="tab-home" class="tab-view active-tab">
+                <div class="hero-section">
+                    <div class="hero-overlay-content">
+                        <span class="sub-tag yellow-text">PREMIUM AUTOMOTIVE</span>
+                        <h1>FIND YOUR<br><span class="highlight">PERFECT DRIVE.</span></h1>
+                        <p>Explore 500+ premium vehicles with flexible financing, exclusive deals, and seamless booking.</p>
+                        <div class="hero-actions">
+                            <button class="btn-primary" onclick="switchTab('inventory')">Browse Inventory <i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="btn-secondary" onclick="switchTab('finance')">Finance Calculator</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-stats">
+                    <div class="h-stat-card"><h3>500+</h3><p>Vehicles in Stock</p></div>
+                    <div class="h-stat-card"><h3>4.9★</h3><p>Customer Rating</p></div>
+                    <div class="h-stat-card"><h3>15yr</h3><p>In Business</p></div>
+                    <div class="h-stat-card"><h3>98%</h3><p>Satisfaction Rate</p></div>
+                </div>
+
+                <div class="section-container">
+                    <div class="section-header">
+                        <h2>FEATURED VEHICLES</h2>
+                        <button class="view-all-link" onclick="switchTab('inventory')">View All <i class="fa-solid fa-angles-right"></i></button>
+                    </div>
+                    <p class="section-subtitle">Handpicked from our premium inventory</p>
+                    
+                    <div class="car-grid columns-4">
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=600" alt="BMW M5">
+                                <span class="badge badge-yellow">Top Rated</span>
+                                <span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>BMW M5 Competition</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">Sedan • Gasoline • 617 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$113,850</div>
+                                        <div class="price-sub">$1,791/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" alt="Toyota Land Cruiser">
+                                <span class="badge badge-red">Hot Deal</span>
+                                <span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Toyota Land Cruiser 300</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">SUV • Diesel • 415 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$83,720</div>
+                                        <div class="price-sub">$1,327/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=600" alt="Tesla Model S">
+                                <span class="badge badge-purple">Electric</span>
+                                <span class="rating-tag">4.8 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Tesla Model S Plaid</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">Electric • Electric • 1020 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$97,990</div>
+                                        <div class="price-sub">$1,553/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=600" alt="Mercedes GLE">
+                                <span class="badge badge-blue">Popular</span>
+                                <span class="rating-tag">4.7 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Mercedes GLE 53 AMG</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">SUV • Hybrid • 429 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$81,965</div>
+                                        <div class="price-sub">$1,298/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promo-callout-box">
+                        <div class="callout-text-side">
+                            <h3>READY TO FINANCE YOUR NEXT VEHICLE?</h3>
+                            <p>Rates from 3.9% APR. Get your payment estimates in seconds.</p>
+                        </div>
+                        <button class="btn-primary" onclick="switchTab('finance')"><i class="fa-solid fa-calculator"></i> Calculate Now</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-inventory" class="tab-view">
+                <div class="section-container">
+                    <div class="inventory-top-bar">
+                        <div>
+                            <h2>FULL INVENTORY</h2>
+                            <p class="section-subtitle" id="inventory-count-text">8 vehicles available</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-controls-row">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input id="inventory-search" type="text" placeholder="Search by name, type, or fuel...">
+                        </div>
+                        <select id="inventory-sort" class="custom-dropdown-select">
+                            <option>Top Rated</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                    </div>
+
+                    <div class="pill-filters-row">
+                        <button class="pill active">All</button>
+                        <button class="pill">Sedan</button>
+                        <button class="pill">SUV</button>
+                        <button class="pill">Truck</button>
+                        <button class="pill">Electric</button>
+                        <button class="pill">Luxury</button>
+                    </div>
+
+                    <div class="car-grid columns-4">
+                        <div class="car-card" data-name="Lamborghini Huracán EVO" data-category="Luxury" data-price="283220" data-rating="5.0" data-keywords="Lamborghini Huracán EVO Luxury Gasoline 640 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://www.cars.com/shopping/lamborghini-huracan_evo-2022/" alt="Bugatti">
+                                <span class="badge badge-yellow">Exclusive</span>
+                                <span class="rating-tag">5.0 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Lamborghini Huracán EVO</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Luxury • Gasoline • 640 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$283,220</div><div class="price-sub">$4,481/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="BMW M5 Competition" data-category="Sedan" data-price="113850" data-rating="4.9" data-keywords="BMW M5 Competition Sedan Gasoline 617 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-155215695-3004980ad54e?auto=format&fit=crop&q=80&w=600" alt="BMW M5"><span class="badge badge-yellow">Top Rated</span><span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>BMW M5 Competition</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Sedan • Gasoline • 617 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$113,850</div><div class="price-sub">$1,791/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Toyota Land Cruiser 300" data-category="SUV" data-price="83720" data-rating="4.9" data-keywords="Toyota Land Cruiser 300 SUV Diesel 415 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" alt="Toyota LC"><span class="badge badge-red">Hot Deal</span><span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Toyota Land Cruiser 300</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">SUV • Diesel • 415 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$83,720</div><div class="price-sub">$1,327/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Tesla Model S Plaid" data-category="Electric" data-price="97990" data-rating="4.8" data-keywords="Tesla Model S Plaid Electric Electric 1020 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=600" alt="Tesla Plaid"><span class="badge badge-purple">Electric</span><span class="rating-tag">4.8 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Tesla Model S Plaid</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Electric • Electric • 1020 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$97,990</div><div class="price-sub">$1,553/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Ford F-150 Raptor R" data-category="Truck" data-price="78288" data-rating="4.8" data-keywords="Ford F-150 Raptor R Truck Gasoline 700 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?auto=format&fit=crop&q=80&w=600" alt="Ford Raptor">
+                                <span class="badge badge-green">Best Seller</span>
+                                <span class="rating-tag">4.8 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Ford F-150 Raptor R</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Truck • Gasoline • 700 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$78,288</div><div class="price-sub">$1,112/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Mercedes GLE 53 AMG" data-category="SUV" data-price="81965" data-rating="4.7" data-keywords="Mercedes GLE 53 AMG SUV Hybrid 429 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=600" alt="Mercedes GLE"><span class="badge badge-blue">Popular</span><span class="rating-tag">4.7 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Mercedes GLE 53 AMG</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">SUV • Hybrid • 429 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$81,965</div><div class="price-sub">$1,298/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Rivian R1T Adventure" data-category="Electric" data-price="74900" data-rating="4.7" data-keywords="Rivian R1T Adventure Electric Electric 835 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&q=80&w=600" alt="Rivian">
+                                <span class="badge badge-teal">New</span>
+                                <span class="rating-tag">4.7 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Rivian R1T Adventure</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Electric • Electric • 835 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$74,900</div><div class="price-sub">$1,187/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Honda Civic Type R" data-category="Sedan" data-price="39897" data-rating="4.6" data-keywords="Honda Civic Type R Sedan Gasoline 315 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=600" alt="Civic Type R">
+                                <span class="badge badge-cyan">Value</span>
+                                <span class="rating-tag">4.6 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Honda Civic Type R</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Sedan • Gasoline • 315 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$39,897</div><div class="price-sub">$632/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-finance" class="tab-view">
+                <div class="narrow-container">
+                    <h2>FINANCING CALCULATOR</h2>
+                    <p class="section-subtitle text-center">Estimate monthly payments and total cost of ownership</p>
+                    
+                    <div class="calculator-layout-split">
+                        <div class="calc-controls-card">
+                            <div class="slider-control-group">
+                                <div class="slider-label-row">
+                                    <span>Vehicle Price</span>
+                                    <span class="slider-output-val">$75,000</span>
+                                </div>
+                                <input type="range" class="custom-slider" min="10000" max="300000" value="75000">
+                                <div class="slider-bounds"><span>$10,000</span><span>$300,000</span></div>
+                            </div>
+
+                            <div class="slider-control-group">
+                                <div class="slider-label-row">
+                                    <span>Down Payment</span>
+                                    <span class="slider-output-val">$15,000</span>
+                                </div>
+                                <input type="range" class="custom-slider" min="0" max="75000" value="15000">
+                                <div class="slider-bounds"><span>$0</span><span>$75,000</span></div>
+                            </div>
+
+                            <div class="slider-control-group">
+                                <div class="slider-label-row">
+                                    <span>Interest Rate (APR)</span>
+                                    <span class="slider-output-val">4.5%</span>
+                                </div>
+                                <input type="range" class="custom-slider" min="10" max="150" value="45">
+                                <div class="slider-bounds"><span>1.0%</span><span>15.0%</span></div>
+                            </div>
+
+                            <div class="term-selector-group">
+                                <label>Loan Term</label>
+                                <div class="term-buttons-row">
+                                    <button class="term-btn">24mo</button>
+                                    <button class="term-btn">36mo</button>
+                                    <button class="term-btn">48mo</button>
+                                    <button class="term-btn active">60mo</button>
+                                    <button class="term-btn">72mo</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="calc-summary-card">
+                            <span class="summary-card-header">PAYMENT SUMMARY</span>
+                            <div class="monthly-payment-display">
+                                <div class="primary-amount">$1,119</div>
+                                <p class="sub-lbl">per month for 60 months</p>
+                            </div>
+                            
+                            <div class="summary-line-item"><span>Vehicle Price</span><span>$75,000</span></div>
+                            <div class="summary-line-item"><span>Down Payment</span><span class="green-text">$15,000</span></div>
+                            <div class="summary-line-item"><span>Loan Amount</span><span>$60,000</span></div>
+                            <div class="summary-line-item"><span>Total Interest</span><span class="orange-text">$7,115</span></div>
+                            
+                            <hr class="card-divider light">
+                            <div class="summary-line-item final-total"><span>Total Cost</span><span class="orange-text">$82,115</span></div>
+                            
+                            <p class="calc-legal-disclaimer">Estimates only. Actual rates depend on credit score and dealer terms.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-offers" class="tab-view">
+                <div class="narrow-container">
+                    <h2>AVAILABLE OFFERS</h2>
+                    <p class="section-subtitle text-center">Exclusive discounts and promotions for our customers</p>
+                    
+                    <div class="offers-grid-layout">
+                        <div class="offer-card-item">
+                            <div class="offer-card-body">
+                                <div class="offer-badge badge-orange">Business</div>
+                                <h3>Fleet Purchase Discount</h3>
+                                <p>10% off on purchases of 3 or more vehicles. Valid for registered business accounts.</p>
+                                <div class="coupon-action-row">
+                                    <div class="coupon-code-container">
+                                        <span>FLEET10</span>
+                                        <button class="copy-embed-btn"><i class="fa-regular fa-copy"></i></button>
+                                    </div>
+                                    <span class="expiry-stamp"><i class="fa-regular fa-calendar"></i> Exp. December 31, 2024</span>
+                                </div>
+                            </div>
+                            <div class="watermark-percentage">10%</div>
+                        </div>
+                        <div class="offer-card-item">
+                            <div class="offer-card-body">
+                                <div class="offer-badge badge-orange">Seasonal</div>
+                                <h3>Summer Clearance Event</h3>
+                                <p>8% off all SUVs and Trucks. Limited-time seasonal offer while stock lasts.</p>
+                                <div class="coupon-action-row">
+                                    <div class="coupon-code-container">
+                                        <span>SUMMER8</span>
+                                        <button class="copy-embed-btn"><i class="fa-regular fa-copy"></i></button>
+                                    </div>
+                                    <span class="expiry-stamp"><i class="fa-regular fa-calendar"></i> Exp. August 31, 2024</span>
+                                </div>
+                            </div>
+                            <div class="watermark-percentage">8%</div>
+                        </div>
+                        <div class="offer-card-item">
+                            <div class="offer-card-body">
+                                <div class="offer-badge badge-teal">EV</div>
+                                <h3>Go Electric Incentive</h3>
+                                <p>5% off all Electric vehicles. Support the future of sustainable mobility.</p>
+                                <div class="coupon-action-row">
+                                    <div class="coupon-code-container">
+                                        <span>ELECTRIC5</span>
+                                        <button class="copy-embed-btn"><i class="fa-regular fa-copy"></i></button>
+                                    </div>
+                                    <span class="expiry-stamp"><i class="fa-regular fa-calendar"></i> Exp. December 31, 2024</span>
+                                </div>
+                            </div>
+                            <div class="watermark-percentage">5%</div>
+                        </div>
+                        <div class="offer-card-item">
+                            <div class="offer-card-body">
+                                <div class="offer-badge badge-purple">Loyalty</div>
+                                <h3>Loyalty Reward</h3>
+                                <p>Exclusive 15% off for returning customers on their second purchase.</p>
+                                <div class="coupon-action-row">
+                                    <div class="coupon-code-container">
+                                        <span>LOYAL15</span>
+                                        <button class="copy-embed-btn"><i class="fa-regular fa-copy"></i></button>
+                                    </div>
+                                    <span class="expiry-stamp"><i class="fa-regular fa-calendar"></i> Exp. June 30, 2025</span>
+                                </div>
+                            </div>
+                            <div class="watermark-percentage">15%</div>
+                        </div>
+                    </div>
+
+                    <div class="info-guide-card">
+                        <div class="guide-header-row">
+                            <i class="fa-regular fa-circle-question icon-blue"></i>
+                            <h4>How to Apply a Discount</h4>
+                        </div>
+                        <p>Copy your discount code and mention it to our sales team during booking, or apply it at checkout. Only one code per transaction. Discounts cannot be combined or transferred.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-terms" class="tab-view">
+                <div class="narrow-container">
+                    <h2>TERMS & CONDITIONS</h2>
+                    <p class="section-subtitle text-center">Last updated June 1, 2024 • Please read carefully before using our services</p>
+                    
+                    <div class="accordion-list-stack">
+                        <div class="accordion-node open">
+                            <div class="accordion-trigger">
+                                <span>1. Acceptance of Terms</span>
+                                <i class="fa-solid fa-chevron-up"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>By accessing and using the Auto Hub platform, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree, please discontinue use immediately. These terms apply to all users, visitors, and customers of Auto Hub.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>2. Vehicle Pricing and Availability</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>Vehicle prices displayed are estimates and may change without prior notice. Availability depends on current stock and location. Final pricing will be confirmed at purchase and may differ from listing data.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>3. Booking and Reservations</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>Booking requests are subject to dealer approval. Reservation deposits are non-refundable unless otherwise specified in the terms of the specific offer or promotion.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>4. Financing and Payments</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>Financing offers are subject to credit approval, and actual rates may vary based on eligibility. Payment schedules, interest, and insurance fees are illustrative and not binding.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>5. Discounts and Promotions</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>Discounts are available only for eligible vehicles and cannot be combined unless explicitly stated. Promotions may expire early and are subject to dealer terms.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>6. Privacy and Data</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>We collect and process personal data to provide services and comply with legal requirements. Your information is handled in accordance with our privacy policy and applicable data protection laws.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>7. Warranty and Returns</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>Warranty terms vary by manufacturer and model. Returns are governed by dealer policy and may not apply to all sales.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>8. Limitation of Liability</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>Auto Hub is not liable for indirect losses, lost profits, or incidental damages arising from the use of our platform or vehicle purchases, except where prohibited by law.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>9. Governing Law</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>These terms are governed by the laws of the applicable jurisdiction where the dealership operates. Disputes will be resolved under those laws.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-node">
+                            <div class="accordion-trigger">
+                                <span>10. Contact Information</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-panel-content">
+                                <p>For questions or support, contact our team using the details provided on our site. We strive to respond to inquiries as quickly as possible.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <button class="floating-help-trigger-widget"><i class="fa-regular fa-circle-question"></i></button>
+
+    <!-- Vehicle Detail Modal -->
+    <div id="vehicle-detail-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content vehicle-detail-modal">
+            <button class="modal-close-btn" onclick="closeVehicleModal()"><i class="fa-solid fa-times"></i></button>
+            <div class="modal-header">
+                <img id="modal-vehicle-image" src="" alt="Vehicle" class="modal-vehicle-image">
+            </div>
+            <div class="modal-body">
+                <div class="modal-vehicle-info">
+                    <h2 id="modal-vehicle-title"></h2>
+                    <div class="modal-vehicle-meta">
+                        <span id="modal-vehicle-year" class="meta-tag"></span>
+                        <span id="modal-vehicle-rating" class="meta-tag rating"></span>
+                    </div>
+                    <p id="modal-vehicle-specs" class="vehicle-specs"></p>
+                    <hr class="divider">
+                    <div class="modal-price-section">
+                        <div>
+                            <p class="price-label">Price</p>
+                            <p id="modal-vehicle-price" class="price-large"></p>
+                        </div>
+                        <div>
+                            <p class="price-label">Est. Monthly</p>
+                            <p id="modal-vehicle-monthly" class="price-large"></p>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="modal-actions">
+                        <button class="btn-primary" onclick="requestTestDrive()"><i class="fa-solid fa-calendar"></i> Request Test Drive</button>
+                        <button class="btn-secondary" id="wishlist-btn" onclick="toggleWishlist()"><i class="fa-solid fa-heart"></i> Add to Wishlist</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle sign in form submission
+        function handleSigninSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const email = form.querySelector('input[name="email"]').value.trim();
+            const password = form.querySelector('input[name="password"]').value;
+
+            if (!email || password.length < 6) {
+                alert('Please enter a valid email and password (6+ characters).');
+                return;
+            }
+
+            const formData = new FormData(form);
+            formData.append('action', 'signin');
+
+            fetch('Auto Dealer Hub.php', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Welcome back, ' + data.user + '!');
+                    document.getElementById('auth-container').style.display = 'none';
+                    document.getElementById('app-container').style.display = 'flex';
+                    document.querySelector('.user-profile span').textContent = data.user.split(' ')[0];
+                    document.querySelector('.avatar').textContent = data.user.charAt(0).toUpperCase();
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                } else {
+                    alert(data.error || 'Invalid email or password.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Could not connect to the login server.');
+            });
+        }
+
+        // Handle signup form submission
+       function handleSignupSubmit(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const fullName = form.querySelector('input[name="Full_Name"]').value.trim();
+    const email = form.querySelector('input[name="Email_Address"]').value.trim();
+    const password = form.querySelector('input[name="Password"]').value;
+
+    // 1. Keep your front-end validation
+    if (!fullName || !email || password.length < 6) {
+        alert('Please enter your name, email, and a password with at least 6 characters.');
+        return;
+    }
+
+    // 2. Package the entire form data to send to PHP
+    const formData = new FormData(form);
+
+    // 3. Send the data to your PHP backend file
+    fetch('Auto Dealer Hub.php', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Account created successfully! Welcome ' + fullName);
+
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'flex';
+            document.querySelector('.user-profile span').textContent = fullName.split(' ')[0];
+            document.querySelector('.avatar').textContent = fullName.charAt(0).toUpperCase();
+            window.scrollTo({ top: 0, behavior: 'instant' });
+
+            form.reset(); // Clear the form fields
+        } else {
+            alert(data.error || 'Something went wrong.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Could not connect to the registration server.');
+    });
+}
+
+        // Switch between Auth Form screens (Sign In / Sign Up)
+        function switchView(viewId) {
+            document.querySelectorAll('.auth-form-side').forEach(el => el.classList.remove('active-view'));
+            document.getElementById(viewId).classList.add('active-view');
+        }
+
+        // Handle dynamic view transition into Dashboard UI
+        function loginDemo() {
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('app-container').style.display = 'flex';
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        // Fallback transition out to Auth screens
+        function logoutDemo() {
+            document.getElementById('app-container').style.display = 'none';
+            document.getElementById('auth-container').style.display = 'flex';
+        }
+
+        // Global Tab Router System
+        function switchTab(tabKey) {
+            // Remove active classes across all application views and navigation handles
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active-tab'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            // Activate contextual node allocations
+            document.getElementById('tab-' + tabKey).classList.add('active-tab');
+            document.getElementById('nav-' + tabKey).classList.add('active');
+            
+            // Scroll view container up on tab transitions
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle Terms & Conditions accordion node state toggle functionality
+        document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const node = trigger.parentElement;
+                const icon = trigger.querySelector('i');
+                const isOpen = node.classList.contains('open');
+                
+                if(isOpen) {
+                    node.classList.remove('open');
+                    icon.className = "fa-solid fa-chevron-down";
+                } else {
+                    node.classList.add('open');
+                    icon.className = "fa-solid fa-chevron-up";
+                }
+            });
+        });
+
+        // FINANCING CALCULATOR FUNCTIONALITY
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'PHP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function calculatePayment() {
+            const priceSlider = document.querySelector('#tab-finance .slider-control-group:nth-child(1) input[type="range"]');
+            const downPaymentSlider = document.querySelector('#tab-finance .slider-control-group:nth-child(2) input[type="range"]');
+            const rateSlider = document.querySelector('#tab-finance .slider-control-group:nth-child(3) input[type="range"]');
+            
+            const vehiclePrice = parseFloat(priceSlider.value);
+            const downPayment = parseFloat(downPaymentSlider.value);
+            const aprRate = parseFloat(rateSlider.value) / 10;
+            
+            const termBtn = document.querySelector('#tab-finance .term-btn.active');
+            const termMonths = parseInt(termBtn.textContent);
+            
+            const loanAmount = vehiclePrice - downPayment;
+            const monthlyRate = aprRate / 100 / 12;
+            let monthlyPayment = 0;
+            
+            if (monthlyRate === 0) {
+                monthlyPayment = loanAmount / termMonths;
+            } else {
+                monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, termMonths)) / (Math.pow(1 + monthlyRate, termMonths) - 1);
+            }
+            
+            const totalPayment = monthlyPayment * termMonths;
+            const totalInterest = totalPayment - loanAmount;
+            const totalCost = vehiclePrice + totalInterest;
+            
+            const priceOutput = document.querySelector('#tab-finance .slider-control-group:nth-child(1) .slider-output-val');
+            const downPaymentOutput = document.querySelector('#tab-finance .slider-control-group:nth-child(2) .slider-output-val');
+            const rateOutput = document.querySelector('#tab-finance .slider-control-group:nth-child(3) .slider-output-val');
+            
+            priceOutput.textContent = formatCurrency(vehiclePrice);
+            downPaymentOutput.textContent = formatCurrency(downPayment);
+            rateOutput.textContent = aprRate.toFixed(1) + '%';
+            downPaymentSlider.max = vehiclePrice;
+            
+            const primaryAmount = document.querySelector('#tab-finance .primary-amount');
+            const subLabel = document.querySelector('#tab-finance .sub-lbl');
+            const summaryItems = document.querySelectorAll('#tab-finance .summary-line-item');
+            const finalTotal = document.querySelector('#tab-finance .final-total span:last-child');
+            
+            primaryAmount.textContent = formatCurrency(monthlyPayment);
+            subLabel.textContent = `per month for ${termMonths} months`;
+            
+            summaryItems[0].querySelector('span:last-child').textContent = formatCurrency(vehiclePrice);
+            summaryItems[1].querySelector('span:last-child').textContent = formatCurrency(downPayment);
+            summaryItems[2].querySelector('span:last-child').textContent = formatCurrency(loanAmount);
+            summaryItems[3].querySelector('span:last-child').textContent = formatCurrency(totalInterest);
+            
+            finalTotal.textContent = formatCurrency(totalCost);
+        }
+
+        function initFinancingCalculator() {
+            const tab = document.getElementById('tab-finance');
+            if (!tab) return;
+            
+            const sliders = tab.querySelectorAll('input[type="range"]');
+            sliders.forEach(slider => {
+                slider.addEventListener('input', calculatePayment);
+            });
+            
+            const termBtns = tab.querySelectorAll('.term-btn');
+            termBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    termBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    calculatePayment();
+                });
+            });
+            
+            calculatePayment();
+        }
+
+        // VEHICLE CARD FUNCTIONALITY
+        const vehicleWishlist = new Set();
+
+        const vehicleDatabase = {
+            'BMW M5 Competition': {
+                image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '4.9',
+                specs: 'Sedan • Gasoline • 617 hp',
+                price: '₱12.79 Million',
+                monthly: '₱1,791/mo est.'
+            },
+            'Toyota Land Cruiser 300': {
+                image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '4.9',
+                specs: 'SUV • Diesel • 415 hp',
+                price: ' ₱2,235,000.',
+                monthly: '₱1,327/mo est.'
+            },
+            'Tesla Model S Plaid': {
+                image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '4.8',
+                specs: 'Electric • Electric • 1020 hp',
+                price: '₱5,879,400',
+                monthly: '₱1,791/mo est.'
+            },
+            'Mercedes GLE 53 AMG': {
+                image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '4.7',
+                specs: 'SUV • Hybrid • 429 hp',
+                price: '₱21,281,965',
+                monthly: '₱1,298/mo est.'
+            },
+            'Lamborghini Huracán EVO': {
+                image: 'https://images.unsplash.com/photo-1600706432502-75a0e2b3b99a?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '5.0',
+                specs: 'Luxury • Gasoline • 640 hp',
+                price: '₱24,483,220',
+                monthly: '₱4,481/mo est.'
+            },
+            'Ford F-150 Raptor R': {
+                image: 'https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '4.8',
+                specs: 'Truck • Gasoline • 700 hp',
+                price: '₱3,978,288',
+                monthly: '₱1,112/mo est.'
+            },
+            'Rivian R1T Adventure': {
+                image: 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '4.7',
+                specs: 'Electric • Electric • 835 hp',
+                price: '₱5,474,900',
+                monthly: '₱134 ,187/mo est.'
+            },
+            'Honda Civic Type R': {
+                image: 'https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&q=80&w=800',
+                year: '2024',
+                rating: '4.6',
+                specs: 'Sedan • Gasoline • 315 hp',
+                price: '₱2,539,897',
+                monthly: '₱6,325/mo est.'
+            }
+        };
+
+        function openVehicleModal(vehicleTitle) {
+            const vehicle = vehicleDatabase[vehicleTitle];
+            if (!vehicle) return;
+
+            document.getElementById('modal-vehicle-image').src = vehicle.image;
+            document.getElementById('modal-vehicle-title').textContent = vehicleTitle;
+            document.getElementById('modal-vehicle-year').textContent = vehicle.year;
+            document.getElementById('modal-vehicle-rating').textContent = vehicle.rating + ' ★';
+            document.getElementById('modal-vehicle-specs').textContent = vehicle.specs;
+            document.getElementById('modal-vehicle-price').textContent = vehicle.price;
+            document.getElementById('modal-vehicle-monthly').textContent = vehicle.monthly;
+
+            updateWishlistBtn(vehicleTitle);
+            document.getElementById('vehicle-detail-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVehicleModal() {
+            document.getElementById('vehicle-detail-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleWishlist() {
+            const title = document.getElementById('modal-vehicle-title').textContent;
+            const btn = document.getElementById('wishlist-btn');
+
+            if (vehicleWishlist.has(title)) {
+                vehicleWishlist.delete(title);
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fa-solid fa-heart"></i> Add to Wishlist';
+            } else {
+                vehicleWishlist.add(title);
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fa-solid fa-heart"></i> Added to Wishlist';
+            }
+        }
+
+        function updateWishlistBtn(vehicleTitle) {
+            const btn = document.getElementById('wishlist-btn');
+            if (vehicleWishlist.has(vehicleTitle)) {
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fa-solid fa-heart"></i> Added to Wishlist';
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fa-solid fa-heart"></i> Add to Wishlist';
+            }
+        }
+
+        function requestTestDrive() {
+            const vehicleTitle = document.getElementById('modal-vehicle-title').textContent;
+            alert(`Test drive requested for ${vehicleTitle}! Our team will contact you shortly.`);
+            closeVehicleModal();
+        }
+
+        function initCarCardHandlers() {
+            document.querySelectorAll('.car-card').forEach(card => {
+                const titleElement = card.querySelector('.card-title-row h3');
+                const actionBtn = card.querySelector('.action-circle-btn');
+                
+                if (titleElement && actionBtn) {
+                    const vehicleTitle = titleElement.textContent;
+                    actionBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        openVehicleModal(vehicleTitle);
+                    });
+
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', (e) => {
+                        if (e.target !== actionBtn && !e.target.closest('button')) {
+                            openVehicleModal(vehicleTitle);
+                        }
+                    });
+                }
+            });
+
+            document.getElementById('vehicle-detail-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'vehicle-detail-modal') {
+                    closeVehicleModal();
+                }
+            });
+        }
+
+        function updateInventoryCount(count) {
+            const countText = document.getElementById('inventory-count-text');
+            if (!countText) return;
+            countText.textContent = `${count} vehicle${count === 1 ? '' : 's'} available`;
+        }
+
+        function getInventoryCards() {
+            return Array.from(document.querySelectorAll('#tab-inventory .car-card'));
+        }
+
+        function applyInventoryFilters() {
+            const searchInput = document.getElementById('inventory-search');
+            const sortSelect = document.getElementById('inventory-sort');
+            const activeFilterBtn = document.querySelector('#tab-inventory .pill-filters-row .pill.active');
+            const searchTerm = (searchInput ? searchInput.value.trim().toLowerCase() : '');
+            const selectedCategory = activeFilterBtn ? activeFilterBtn.textContent.trim().toLowerCase() : 'all';
+            const sortOption = sortSelect ? sortSelect.value : 'Top Rated';
+            const cards = getInventoryCards();
+            const grid = document.querySelector('#tab-inventory .car-grid');
+
+            const visibleCards = cards.filter(card => {
+                const name = (card.dataset.name || '').toLowerCase();
+                const keywords = (card.dataset.keywords || '').toLowerCase();
+                const category = (card.dataset.category || '').toLowerCase();
+                const price = card.dataset.price || '';
+                const matchesSearch = !searchTerm || name.includes(searchTerm) || keywords.includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+                const shouldShow = matchesSearch && matchesCategory;
+                card.style.display = shouldShow ? '' : 'none';
+                return shouldShow;
+            });
+
+            const sortedCards = visibleCards.slice();
+            if (sortOption === 'Price: Low to High') {
+                sortedCards.sort((a, b) => parseInt(a.dataset.price, 10) - parseInt(b.dataset.price, 10));
+            } else if (sortOption === 'Price: High to Low') {
+                sortedCards.sort((a, b) => parseInt(b.dataset.price, 10) - parseInt(a.dataset.price, 10));
+            } else {
+                sortedCards.sort((a, b) => parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating));
+            }
+
+            sortedCards.forEach(card => {
+                if (grid && card.parentElement === grid) {
+                    grid.appendChild(card);
+                }
+            });
+
+            updateInventoryCount(visibleCards.length);
+        }
+
+        function initInventoryFilters() {
+            const searchInput = document.getElementById('inventory-search');
+            const sortSelect = document.getElementById('inventory-sort');
+            const pillButtons = document.querySelectorAll('#tab-inventory .pill-filters-row .pill');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', applyInventoryFilters);
+            }
+
+            if (sortSelect) {
+                sortSelect.addEventListener('change', applyInventoryFilters);
+            }
+
+            pillButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    pillButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    applyInventoryFilters();
+                });
+            });
+
+            applyInventoryFilters();
+        }
+
+        function initOfferCopyActions() {
+            const copyButtons = document.querySelectorAll('#tab-offers .copy-embed-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const codeContainer = button.closest('.coupon-code-container');
+                    const codeSpan = codeContainer ? codeContainer.querySelector('span') : null;
+                    const couponCode = codeSpan ? codeSpan.textContent.trim() : '';
+                    if (!couponCode) return;
+
+                    const showCopiedState = () => {
+                        button.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+                        button.classList.add('copied');
+                        window.setTimeout(() => {
+                            button.innerHTML = '<i class="fa-regular fa-copy"></i>';
+                            button.classList.remove('copied');
+                        }, 1400);
+                    };
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(couponCode).then(showCopiedState).catch(() => {
+                            showCopiedState();
+                        });
+                    } else {
+                        const textarea = document.createElement('textarea');
+                        textarea.value = couponCode;
+                        textarea.style.position = 'fixed';
+                        textarea.style.left = '-9999px';
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        showCopiedState();
+                    }
+                });
+            });
+        }
+
+        // Initialize everything when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                initFinancingCalculator();
+                initCarCardHandlers();
+                initInventoryFilters();
+                initOfferCopyActions();
+            });
+        } else {
+            initFinancingCalculator();
+            initCarCardHandlers();
+            initInventoryFilters();
+            initOfferCopyActions();
+        }
+    </script>
+</body>
+</html>
