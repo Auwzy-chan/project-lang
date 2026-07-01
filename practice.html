@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Hub - Premium Automotive Dealership</title>
+    <link rel="stylesheet" href="Auto Dealer Hub.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Stats Grid Styling from Auto Dealer Hub.json */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            border-top: 1px solid rgba(31, 41, 55, 0.6);
+            padding-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="auth-container" class="auth-wrapper">
+        <div class="auth-banner">
+            <div class="brand-header">
+                <div class="brand-icon"><i class="fa-solid fa-car-side"></i></div>
+                <span class="brand-name">AUTO HUB</span>
+            </div>
+            <div class="banner-content">
+                <span class="sub-tag">PREMIER DEALERSHIP</span>
+                <h1>YOUR NEXT<br><span class="highlight">DREAM CAR</span><br>AWAITS.</h1>
+                <p>Browse, finance, and book your next premium vehicle — all in one place.</p>
+
+                <div class="banner-stats">
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Vehicles</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>4.9★</h3>
+                        <p>Rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15yr</h3>
+                        <p>Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-signin" class="auth-form-side active-view">
+            <div class="form-container">
+                <div class="auth-toggle-header">
+                    <button class="toggle-btn active">Sign In</button>
+                    <button class="toggle-btn" onclick="switchView('view-signup')">Create Account</button>
+                </div>
+
+                <h2>WELCOME BACK</h2>
+                <p class="form-subtitle">Sign in to your account to continue</p>
+
+                <form onsubmit="handleSigninSubmit(event);">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary main-submit">Sign In</button>
+                </form>
+                <p class="demo-notice">Demo: any email + 6+ character password</p>
+            </div>
+        </div>
+
+        <div id="view-signup" class="auth-form-side">
+            <div class="form-container">
+                <div class="auth-toggle-header">
+                    <button class="toggle-btn" onclick="switchView('view-signin')">Sign In</button>
+                    <button class="toggle-btn active">Create Account</button>
+                </div>
+
+                <h2>JOIN AUTO HUB</h2>
+                <p class="form-subtitle">Create your account to get started</p>
+
+                <form id="signupForm" onsubmit="handleSignupSubmit(event);">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" name="Full_Name" placeholder="Alex Rivera" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="Email_Address" placeholder="you@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="Phone_Number" placeholder="+63 9XX XXX XXXX" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" name="Password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary main-submit">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="app-container" class="app-layout" style="display: none;">
+        <header class="navbar">
+            <div class="brand-header mini">
+                <div class="brand-icon"><i class="fa-solid fa-car-side"></i></div>
+                <span class="brand-name">AUTO HUB</span>
+            </div>
+            <nav class="nav-links">
+                <button id="nav-home" class="nav-item active" onclick="switchTab('home')">Home</button>
+                <button id="nav-inventory" class="nav-item" onclick="switchTab('inventory')">Inventory</button>
+                <button id="nav-finance" class="nav-item" onclick="switchTab('finance')">Finance</button>
+                <button id="nav-offers" class="nav-item" onclick="switchTab('offers')">Offers</button>
+                <button id="nav-terms" class="nav-item" onclick="switchTab('terms')">Terms</button>
+            </nav>
+            <div class="user-profile" onclick="logoutDemo()">
+                <div class="avatar">A</div>
+                <span>Alex</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </header>
+
+        <main class="content-body">
+
+            <section id="tab-home" class="tab-view active-tab">
+                <div class="hero-section">
+                    <div class="hero-overlay-content">
+                        <span class="sub-tag yellow-text">PREMIUM AUTOMOTIVE</span>
+                        <h1>FIND YOUR<br><span class="highlight">PERFECT DRIVE.</span></h1>
+                        <p>Explore 500+ premium vehicles with flexible financing, exclusive deals, and seamless booking.</p>
+                        <div class="hero-actions">
+                            <button class="btn-primary" onclick="switchTab('inventory')">Browse Inventory <i class="fa-solid fa-chevron-right"></i></button>
+                            <button class="btn-secondary" onclick="switchTab('finance')">Finance Calculator</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-stats">
+                    <div class="h-stat-card"><h3>500+</h3><p>Vehicles in Stock</p></div>
+                    <div class="h-stat-card"><h3>4.9★</h3><p>Customer Rating</p></div>
+                    <div class="h-stat-card"><h3>15yr</h3><p>In Business</p></div>
+                    <div class="h-stat-card"><h3>98%</h3><p>Satisfaction Rate</p></div>
+                </div>
+
+                <div class="section-container">
+                    <div class="section-header">
+                        <h2>FEATURED VEHICLES</h2>
+                        <button class="view-all-link" onclick="switchTab('inventory')">View All <i class="fa-solid fa-angles-right"></i></button>
+                    </div>
+                    <p class="section-subtitle">Handpicked from our premium inventory</p>
+
+                    <div class="car-grid columns-4">
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=600" alt="BMW M5">
+                                <span class="badge badge-yellow">Top Rated</span>
+                                <span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>BMW M5 Competition</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">Sedan • Gasoline • 617 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$113,850</div>
+                                        <div class="price-sub">$1,791/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" alt="Toyota Land Cruiser">
+                                <span class="badge badge-red">Hot Deal</span>
+                                <span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Toyota Land Cruiser 300</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">SUV • Diesel • 415 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$83,720</div>
+                                        <div class="price-sub">$1,327/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=600" alt="Tesla Model S">
+                                <span class="badge badge-purple">Electric</span>
+                                <span class="rating-tag">4.8 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Tesla Model S Plaid</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">Electric • Electric • 1020 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$97,990</div>
+                                        <div class="price-sub">$1,553/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=600" alt="Mercedes GLE">
+                                <span class="badge badge-blue">Popular</span>
+                                <span class="rating-tag">4.7 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row">
+                                    <h3>Mercedes GLE 53 AMG</h3>
+                                    <span class="car-year">2024</span>
+                                </div>
+                                <p class="car-specs">SUV • Hybrid • 429 hp</p>
+                                <hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div>
+                                        <div class="price-main">$81,965</div>
+                                        <div class="price-sub">$1,298/mo est.</div>
+                                    </div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promo-callout-box">
+                        <div class="callout-text-side">
+                            <h3>READY TO FINANCE YOUR NEXT VEHICLE?</h3>
+                            <p>Rates from 3.9% APR. Get your payment estimates in seconds.</p>
+                        </div>
+                        <button class="btn-primary" onclick="switchTab('finance')"><i class="fa-solid fa-calculator"></i> Calculate Now</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-inventory" class="tab-view">
+                <div class="section-container">
+                    <div class="inventory-top-bar">
+                        <div>
+                            <h2>FULL INVENTORY</h2>
+                            <p class="section-subtitle" id="inventory-count-text">8 vehicles available</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-controls-row">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input id="inventory-search" type="text" placeholder="Search by name, type, or fuel...">
+                        </div>
+                        <select id="inventory-sort" class="custom-dropdown-select">
+                            <option>Top Rated</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                    </div>
+
+                    <div class="pill-filters-row">
+                        <button class="pill active">All</button>
+                        <button class="pill">Sedan</button>
+                        <button class="pill">SUV</button>
+                        <button class="pill">Truck</button>
+                        <button class="pill">Electric</button>
+                        <button class="pill">Luxury</button>
+                    </div>
+
+                    <div class="car-grid columns-4">
+                        <div class="car-card" data-name="Lamborghini Huracán EVO" data-category="Luxury" data-price="283220" data-rating="5.0" data-keywords="Lamborghini Huracán EVO Luxury Gasoline 640 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://www.cars.com/shopping/lamborghini-huracan_evo-2022/" alt="Bugatti">
+                                <span class="badge badge-yellow">Exclusive</span>
+                                <span class="rating-tag">5.0 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Lamborghini Huracán EVO</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Luxury • Gasoline • 640 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$283,220</div><div class="price-sub">$4,481/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="BMW M5 Competition" data-category="Sedan" data-price="113850" data-rating="4.9" data-keywords="BMW M5 Competition Sedan Gasoline 617 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-155215695-3004980ad54e?auto=format&fit=crop&q=80&w=600" alt="BMW M5"><span class="badge badge-yellow">Top Rated</span><span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>BMW M5 Competition</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Sedan • Gasoline • 617 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$113,850</div><div class="price-sub">$1,791/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Toyota Land Cruiser 300" data-category="SUV" data-price="83720" data-rating="4.9" data-keywords="Toyota Land Cruiser 300 SUV Diesel 415 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" alt="Toyota LC"><span class="badge badge-red">Hot Deal</span><span class="rating-tag">4.9 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Toyota Land Cruiser 300</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">SUV • Diesel • 415 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$83,720</div><div class="price-sub">$1,327/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-card" data-name="Tesla Model S Plaid" data-category="Electric" data-price="97990" data-rating="4.8" data-keywords="Tesla Model S Plaid Electric Electric 1020 hp">
+                            <div class="card-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=600" alt="Tesla Plaid"><span class="badge badge-purple">Electric</span><span class="rating-tag">4.8 ★</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="card-title-row"><h3>Tesla Model S Plaid</h3><span class="car-year">2024</span></div>
+                                <p class="car-specs">Electric • Electric • 1020 hp</p><hr class="card-divider">
+                                <div class="card-price-row">
+                                    <div><div class="price-main">$97,990</div><div class="price-sub">$1,553/mo est.</div></div>
+                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
