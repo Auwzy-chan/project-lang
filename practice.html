@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+ 
+                    
+                        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,6 +17,13 @@
             border-top: 1px solid rgba(31, 41, 55, 0.6);
             padding-top: 1.5rem;
         }
+
+        /* Essential fallback utilities if not in external CSS */
+        .auth-form-side { display: none; }
+        .auth-form-side.active-view { display: flex; }
+        .tab-view { display: none; }
+        .tab-view.active-tab { display: block; }
+        .pill { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -60,11 +69,11 @@
                 <form onsubmit="handleSigninSubmit(event);">
                     <div class="input-group">
                         <label>Email Address</label>
-                        <input type="email" name="email" placeholder="you@example.com" required>
+                        <input type="email" id="signin-email" placeholder="you@example.com" required>
                     </div>
                     <div class="input-group">
                         <label>Password</label>
-                        <input type="password" name="password" placeholder="••••••••" required>
+                        <input type="password" id="signin-password" placeholder="••••••••" required>
                     </div>
                     <button type="submit" class="btn-primary main-submit">Sign In</button>
                 </form>
@@ -85,19 +94,19 @@
                 <form id="signupForm" onsubmit="handleSignupSubmit(event);">
                     <div class="input-group">
                         <label>Full Name</label>
-                        <input type="text" name="Full_Name" placeholder="Alex Rivera" required>
+                        <input type="text" id="signup-name" placeholder="Alex Rivera" required>
                     </div>
                     <div class="input-group">
                         <label>Email Address</label>
-                        <input type="email" name="Email_Address" placeholder="you@example.com" required>
+                        <input type="email" placeholder="you@example.com" required>
                     </div>
                     <div class="input-group">
                         <label>Phone Number</label>
-                        <input type="tel" name="Phone_Number" placeholder="+63 9XX XXX XXXX" required>
+                        <input type="tel" placeholder="+63 9XX XXX XXXX" required>
                     </div>
                     <div class="input-group">
                         <label>Password</label>
-                        <input type="password" name="Password" placeholder="••••••••" required>
+                        <input type="password" id="signup-password" placeholder="••••••••" required>
                     </div>
                     <button type="submit" class="btn-primary main-submit">Create Account</button>
                 </form>
@@ -120,9 +129,9 @@
                 <button id="nav-terms" class="nav-item" onclick="switchTab('terms')">Terms</button>
             </nav>
             <div class="user-profile" onclick="logoutDemo()">
-                <div class="avatar">A</div>
-                <span>Alex</span>
-                <i class="fa-solid fa-chevron-down"></i>
+                <div class="avatar" id="user-avatar">A</div>
+                <span id="user-display-name">Alex</span>
+                <i class="fa-solid fa-arrow-right-from-bracket" style="margin-left: 8px; font-size: 0.85rem;" title="Logout"></i>
             </div>
         </header>
 
@@ -158,7 +167,7 @@
                     <div class="car-grid columns-4">
                         <div class="car-card">
                             <div class="card-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=600" alt="BMW M5">
+                                <img src="https://images.unsplash.com/photo-155215695-3004980ad54e?auto=format&fit=crop&q=80&w=600" alt="BMW M5">
                                 <span class="badge badge-yellow">Top Rated</span>
                                 <span class="rating-tag">4.9 ★</span>
                             </div>
@@ -174,7 +183,7 @@
                                         <div class="price-main">$113,850</div>
                                         <div class="price-sub">$1,791/mo est.</div>
                                     </div>
-                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                    <button class="action-circle-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +205,7 @@
                                         <div class="price-main">$83,720</div>
                                         <div class="price-sub">$1,327/mo est.</div>
                                     </div>
-                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                    <button class="action-circle-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -218,7 +227,7 @@
                                         <div class="price-main">$97,990</div>
                                         <div class="price-sub">$1,553/mo est.</div>
                                     </div>
-                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                    <button class="action-circle-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -240,7 +249,7 @@
                                         <div class="price-main">$81,965</div>
                                         <div class="price-sub">$1,298/mo est.</div>
                                     </div>
-                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                    <button class="action-circle-btn" onclick="switchTab('inventory')"><i class="fa-solid fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -261,35 +270,34 @@
                     <div class="inventory-top-bar">
                         <div>
                             <h2>FULL INVENTORY</h2>
-                            <p class="section-subtitle" id="inventory-count-text">8 vehicles available</p>
+                            <p class="section-subtitle" id="inventory-count-text">4 vehicles available</p>
                         </div>
                     </div>
 
                     <div class="filter-controls-row">
                         <div class="search-input-wrapper">
                             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                            <input id="inventory-search" type="text" placeholder="Search by name, type, or fuel...">
+                            <input id="inventory-search" type="text" placeholder="Search by name, type, or fuel..." oninput="filterInventory()">
                         </div>
-                        <select id="inventory-sort" class="custom-dropdown-select">
-                            <option>Top Rated</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
+                        <select id="inventory-sort" class="custom-dropdown-select" onchange="filterInventory()">
+                            <option value="rated">Top Rated</option>
+                            <option value="low">Price: Low to High</option>
+                            <option value="high">Price: High to Low</option>
                         </select>
                     </div>
 
-                    <div class="pill-filters-row">
-                        <button class="pill active">All</button>
-                        <button class="pill">Sedan</button>
-                        <button class="pill">SUV</button>
-                        <button class="pill">Truck</button>
-                        <button class="pill">Electric</button>
-                        <button class="pill">Luxury</button>
+                    <div class="pill-filters-row" id="category-pills">
+                        <button class="pill active" onclick="changeCategoryFilter(this, 'All')">All</button>
+                        <button class="pill" onclick="changeCategoryFilter(this, 'Sedan')">Sedan</button>
+                        <button class="pill" onclick="changeCategoryFilter(this, 'SUV')">SUV</button>
+                        <button class="pill" onclick="changeCategoryFilter(this, 'Electric')">Electric</button>
+                        <button class="pill" onclick="changeCategoryFilter(this, 'Luxury')">Luxury</button>
                     </div>
 
-                    <div class="car-grid columns-4">
+                    <div class="car-grid columns-4" id="inventory-grid">
                         <div class="car-card" data-name="Lamborghini Huracán EVO" data-category="Luxury" data-price="283220" data-rating="5.0" data-keywords="Lamborghini Huracán EVO Luxury Gasoline 640 hp">
                             <div class="card-image-wrapper">
-                                <img src="https://www.cars.com/shopping/lamborghini-huracan_evo-2022/" alt="Bugatti">
+                                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=600" alt="Lamborghini">
                                 <span class="badge badge-yellow">Exclusive</span>
                                 <span class="rating-tag">5.0 ★</span>
                             </div>
@@ -328,24 +336,4 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="car-card" data-name="Tesla Model S Plaid" data-category="Electric" data-price="97990" data-rating="4.8" data-keywords="Tesla Model S Plaid Electric Electric 1020 hp">
-                            <div class="card-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=600" alt="Tesla Plaid"><span class="badge badge-purple">Electric</span><span class="rating-tag">4.8 ★</span>
-                            </div>
-                            <div class="card-details">
-                                <div class="card-title-row"><h3>Tesla Model S Plaid</h3><span class="car-year">2024</span></div>
-                                <p class="car-specs">Electric • Electric • 1020 hp</p><hr class="card-divider">
-                                <div class="card-price-row">
-                                    <div><div class="price-main">$97,990</div><div class="price-sub">$1,553/mo est.</div></div>
-                                    <button class="action-circle-btn"><i class="fa-solid fa-arrow-right"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-</body>
-</html>
+                        <div class="car-card" data-name="Tesla Model S Plaid" data-
